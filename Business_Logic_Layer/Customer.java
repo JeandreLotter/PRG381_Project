@@ -41,6 +41,7 @@ public class Customer extends Person{
     public String GetMessage(){
         return message;
     };
+    
     @Override
     public String NotifyUser(String orderNumber, boolean accepted) {
         if (accepted) {
