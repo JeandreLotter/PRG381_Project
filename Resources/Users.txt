@@ -1,0 +1,4 @@
+
+Jaco,vdMerwe,0821231234,qwerty123,true,true
+Jeandre,Lotter,0822893847,123qwerty,false,true
+Hano,Taljaard,0823849038,qwe123rty,false,false

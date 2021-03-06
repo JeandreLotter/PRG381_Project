@@ -1,56 +1,64 @@
 package Business_Logic_Layer;
 
-public class Customer extends Person{
-    private String fName, lName, number, password, message;
-    private boolean isStaff, notification;
+import Data_Access_Layer.DataHandler;
 
-    public Customer(String fName_, String lName_, String number_, String password_, boolean isStaff_, boolean notification_, String message_){
+public class Customer extends Person{
+    private String orderNum, fName, lName, number, password;
+    private boolean notification, accepted;
+
+    public Customer(String orderNum_, String fName_, String lName_, String number_, String password_,boolean notification_, boolean accepted_){
+        this.orderNum = orderNum_;
         this.fName = fName_;
         this.lName = lName_;
         this.number = number_;
         this.password = password_;
-        this.isStaff = isStaff_;
         this.notification = notification_;
-        this.message = message_;
+        this.accepted = accepted_;
     }
     
+    public String GetOrderNum(){
+        return this.orderNum;
+    }
+
     public String GetFname(){
-        return fName;
-    };
+        return this.fName;
+    }
 
     public String GetLname(){
-        return lName;
-    };
+        return this.lName;
+    }
 
     public String GetNum(){
-        return number;
-    };
+        return this.number;
+    }
 
     public String GetPassword(){
-        return password;
-    };
-
-    public boolean GetIsStaff(){
-        return isStaff;
-    };
+        return this.password;
+    }
 
     public boolean GetNotification(){
-        return notification;
-    };
+        return this.notification;
+    }
 
-    public String GetMessage(){
-        return message;
-    };
-    
-    @Override
-    public String NotifyUser(String orderNumber, boolean accepted) {
-        if (accepted) {
-            String message = "Your order ["+orderNumber+"] has been accepted!";
-            return message;
-        }
-        else{
-            return "No response yet";
-        }
+    public boolean GetAccepted(){
+        return this.accepted;
     }
     
+    @Override
+    public String NotifyUser(String orderNumber) {
+            String message = "Your order ["+orderNumber+"] has been accepted!";
+            return message; 
+    }
+
+    @Override
+    public void saveUser() {
+        String saveUser = fName+","+lName+","+number+","+password+","+notification;
+        DataHandler dh = new DataHandler();
+        dh.UserDetails(saveUser);
+    }
+    
+    public Customer readUser(String orderNumber){
+        DataHandler dh = new DataHandler();
+        
+    }
 }
