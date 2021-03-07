@@ -2,7 +2,11 @@
 package Data_Access_Layer;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
+
+import javax.sound.midi.Patch;
 
 
 public class DataHandler {
@@ -11,7 +15,7 @@ public void UserDetails(String saveUser){
     try {
         String Pathway = "Resources\\Users.txt";
         FileWriter myWriter = new FileWriter(Pathway);
-        myWriter.write(saveUser);
+        myWriter.append(saveUser);
         myWriter.close();
         System.out.println("User successfully registered");
       } catch (IOException e) {
@@ -24,7 +28,7 @@ public void StaffDetails(String saveUser){
   try {
       String Pathway = "Resources\\Staff.txt";
       FileWriter myWriter = new FileWriter(Pathway);
-      myWriter.write(saveUser);
+      myWriter.append(saveUser);
       myWriter.close();
       System.out.println("Staff successfully registered");
     } catch (IOException e) {
@@ -33,14 +37,14 @@ public void StaffDetails(String saveUser){
     }
 }
 
-public void EventDetail(String OrderNumber, String eType, String Date, String Time, String Address, int amount, int aMount, int camount, String Deserts, String Decorations, String decSize, Double Total){
+public void EventDetail(String orderDetails){
     try {
         
-        String Pathway = "resources\\Orders.txt";
+        String Pathway = ".resources/Orders.txt";
         FileWriter myWriter = new FileWriter(Pathway);
-        myWriter.write(OrderNumber+","+eType+","+Date+","+Time+","+Address+","+amount+","+amount+","+camount+","+Deserts+","+Decorations+","+decSize+","+Total);
+        myWriter.append(orderDetails);
         myWriter.close();
-        System.out.println("Successfully registered "+ eType + " for the " + Date + " and at " + Time);
+        System.out.println("Successfully registered");
       } catch (IOException e) {
         System.out.println("An error occurred.");
         e.printStackTrace();
@@ -148,8 +152,9 @@ public ArrayList<String> readUpdates() throws IOException{
 public void Writetofile(ArrayList<String>list){
   try {
     BufferedWriter writer = new BufferedWriter(new FileWriter("Resources\\Users.txt"));
+    writer.write("");
     for(String x:list){
-      writer.write(x);
+      writer.append(x);
       writer.newLine();
     }
     writer.close();
@@ -176,8 +181,9 @@ System.out.println(list.toString());
 public void Writetoofile(ArrayList<String>list){
   try {
     BufferedWriter writer = new BufferedWriter(new FileWriter("Resources\\Orders.txt"));
+    writer.write("");
     for(String x:list){
-      writer.write(x);
+      writer.append(x);
       writer.newLine();
     }
     writer.close();
@@ -231,13 +237,16 @@ public void UpdateOrders(String orderdetail) throws IOException{
   writer.close();
 }
 
- public String nextOrderNum(){
-    Scanner sc = new Scanner("Resources\\Orders.txt");
+ public String nextOrderNum() throws IOException{
+    Path source = Paths.get("./Resources/Orders.txt");
+    Scanner sc = new Scanner(source);
     String last ="";
     while (sc.hasNextLine()) {
       last = sc.nextLine();
     }
-    int i = Integer.parseInt(last.split(",")[0]) + 1;
+    String[] lastline = last.split(",");
+    int i = Integer.parseInt(lastline[0]) + 1;
+    System.out.println(i);
     return Integer.toString(i);
  }
   

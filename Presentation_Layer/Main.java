@@ -7,6 +7,7 @@ import Business_Logic_Layer.Customer;
 import Business_Logic_Layer.Orders;
 import Business_Logic_Layer.Staff;
 import Data_Access_Layer.DataHandler;
+
 enum Menu{
     opt0, opt1, opt2, opt3, opt4
 }
@@ -30,18 +31,18 @@ public class Main {
 
         disp.displayLogon();
         Scanner sc = new Scanner(System.in);
-        String slct = sc.next();
+        String slct = sc.nextLine();
 
-        Menu choice = Menu.valueOf(slct);
+        Menu choice = Menu.values()[Integer.parseInt(slct)];
 
         switch (choice) {
             case opt0:
-            
-
+                System.exit(0);
                 break;
             
             case opt1:
             //Capture user details
+            orderNum = dh.nextOrderNum();  //Autogen order number
                 System.out.println("Enter your name:");
                 fName = sc.nextLine();
                 System.out.println("Enter your surname:");
@@ -53,6 +54,9 @@ public class Main {
                 
 
             //Capture order details. Check if date is available. Generate orderNumber
+
+            //orderNum = dh.nextOrderNum();  //Autogen order number
+
             System.out.println("Enter the theme:");
             theme = sc.nextLine();
             System.out.println("Enter the venue address:");
@@ -66,10 +70,7 @@ public class Main {
             System.out.println("Enter number of kids joining:");
             numKids = Integer.parseInt(sc.nextLine());
             //get event date
-            LocalDate getDate = java.time.LocalDate.now();
             String year, month, day;
-            System.out.println(getDate);
-            System.out.println(getDate.getMonthValue());
             System.out.println("Enter year");
             year = sc.nextLine();
             System.out.println("Enter month");
@@ -78,12 +79,11 @@ public class Main {
             day = sc.nextLine();
             LocalDate date = LocalDate.parse(year+"-"+month+"-"+day);
             eventDate = date; 
-
             //AdultFood switch
 
             disp.displayAdultFood();
             slct = sc.next();
-            choice = Menu.valueOf(slct);
+            choice = Menu.values()[Integer.parseInt(slct)];
 
             switch (choice) {
                 case opt1:
@@ -110,7 +110,7 @@ public class Main {
 
              disp.displayKidsFood();
              slct = sc.next();
-             choice = Menu.valueOf(slct);
+             choice = Menu.values()[Integer.parseInt(slct)];
  
              switch (choice) {
                  case opt1:
@@ -137,7 +137,7 @@ public class Main {
 
             disp.displayDrinks();
             slct = sc.next();
-            choice = Menu.valueOf(slct);
+            choice = Menu.values()[Integer.parseInt(slct)];
 
             switch (choice) {
                 case opt1:
@@ -164,7 +164,7 @@ public class Main {
 
              disp.displayDessert();
              slct = sc.next();
-             choice = Menu.valueOf(slct);
+             choice = Menu.values()[Integer.parseInt(slct)];
  
              switch (choice) {
                  case opt1:
@@ -187,12 +187,9 @@ public class Main {
                      break;
              }
 
-             System.out.println("Enter the theme you want");
-             theme = sc.nextLine(); 
+             
 
-            //Autogen order number
             
-            orderNum = dh.nextOrderNum();
 
             //Save user and order details
                 Customer cus = new Customer(orderNum, fName, lName, number, password, notification, accepted);
@@ -218,7 +215,7 @@ public class Main {
                 if (dh.Validation(iOrderNumber, iUserPass) ) {
                     disp.displayModifyCancel();
             slct = sc.next();
-            choice = Menu.valueOf(slct);
+            choice = Menu.values()[Integer.parseInt(slct)];
             
             switch (choice) {
                 case opt1:
@@ -291,3 +288,4 @@ public class Main {
     
 
 }
+//opt0
