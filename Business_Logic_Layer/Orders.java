@@ -3,15 +3,19 @@ package Business_Logic_Layer;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
+
+import Data_Access_Layer.DataHandler;
 public class Orders {
    
-private  String  theme, venueAddress, venueNum, eventType, orderNum;
+private  String  theme, venueAddress, venueNum, eventType, orderNum,aduldFood,kidsFood,drinks,desserts;
 private  int numAdult, numKids;
 private  double price;
 private LocalDate eventDate; 
 
 public Orders(String theme_,String venueAddress_,String venueNum_,
-                                    String eventType_,String orderNum_,int numAdult_,int numKids_,double price_,LocalDate eventDate_){
+                                    String eventType_,String orderNum_,int numAdult_,
+                                    int numKids_,LocalDate eventDate_, String aduldFood_,
+                                    String kidsFood_, String drinks_, String desserts_){
                                        
          this.theme = theme_;
          this.venueAddress = venueAddress_;
@@ -20,7 +24,11 @@ public Orders(String theme_,String venueAddress_,String venueNum_,
          this.orderNum = orderNum_;
          this.numAdult = numAdult_;
          this.numKids = numKids_;
-         this.price = price_;
+
+         this.aduldFood = aduldFood_;
+         this.kidsFood = kidsFood_;
+         this.drinks = drinks_;
+         this.desserts = desserts_;
          this.eventDate = eventDate_;
 }
 
@@ -61,6 +69,19 @@ public LocalDate GeteventDate(){
     return eventDate;
 };
 
+public String GetAduldFood(){
+    return aduldFood;
+};
+
+public String GetKidsFood(){
+    return kidsFood;
+};
+public String GetDrinks(){
+    return drinks;
+};
+public String GetDesserts(){
+    return desserts;
+};
 
 
 
@@ -83,6 +104,12 @@ price = (numAdult * costAdultFood) + (numKids * costKidsFood) + ((numAdult + num
 public void  Discount15(double costAdultFood){
 double discount = costAdultFood * 0.15; 
 price  = price - discount;
+}
+
+public void saveOrder() {
+    String saveOrder = orderNum+","+theme+","+venueAddress+","+venueNum+","+eventType+","+numAdult+","+numKids+","+eventDate;//theme, venueAddress, venueNum, eventType, orderNum, numAdult, numKids, eventDate
+    DataHandler dh = new DataHandler();
+    dh.UserDetails(saveOrder);
 }
 
 }

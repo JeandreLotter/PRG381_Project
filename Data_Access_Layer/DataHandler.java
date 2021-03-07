@@ -141,6 +141,7 @@ public static void Writetofile(ArrayList<String>list){
       writer.write(x);
       writer.newLine();
     }
+    writer.close();
   } catch (Exception e) {
     e.getStackTrace();
   }
@@ -160,9 +161,35 @@ for(int i =0;i<list.size();i++){
 System.out.println(list.toString());
 }
 
+//delete Order
+public static void Writetoofile(ArrayList<String>list){
+  try {
+    BufferedWriter writer = new BufferedWriter(new FileWriter("Resources\\Orders.txt"));
+    for(String x:list){
+      writer.write(x);
+      writer.newLine();
+    }
+    writer.close();
+  } catch (Exception e) {
+    e.getStackTrace();
+  }
+}
 
+public static void DeleteOrder(String orderNum) throws IOException{
+ArrayList<String> list = new ArrayList<>();
+DataHandler dh = new DataHandler();
+list = dh.readUser();
+System.out.println(list.toString());
+for(int i =0;i<list.size();i++){
+  if(list.get(i).split(",")[0] == orderNum){
+    list.remove(i);
+    Writetoofile(list);
+  }
+}
+System.out.println(list.toString());
+}
 
-public void UpdateOrders(String tEvent) throws IOException{
+public void UpdateOrders(String orderdetail) throws IOException{
   String filePath = "Resources\\Orders.txt";
   Scanner sc = new Scanner(filePath);
   FileWriter writer = new FileWriter(filePath);
@@ -180,7 +207,7 @@ public void UpdateOrders(String tEvent) throws IOException{
   
   String oldLine = last;
   //add update all
-  String newLine = tEvent;
+  String newLine = orderdetail;
   //Replacing the old line with new line
   fileContents = fileContents.replaceAll(oldLine, newLine);
   //instantiating the FileWriter class
