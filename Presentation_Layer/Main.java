@@ -2,6 +2,7 @@ package Presentation_Layer;
 import java.util.Scanner;
 
 import Business_Logic_Layer.Customer;
+import Business_Logic_Layer.Staff;
 enum Menu{
     opt0, opt1, opt2, opt3, opt4
 }
@@ -10,7 +11,7 @@ public class Main {
     
 
     public static void main(String[] args) {
-        String fName, lName, number, password;
+        String fName, lName, number, password, staffName, stafflname, staffNumber, staffPass;
         boolean notification = false, accepted = false;
         DisplayMenus disp = new DisplayMenus();
 
@@ -55,7 +56,16 @@ public class Main {
                 break;
             
             case opt4:
-                
+                System.out.println("Enter your name:");
+                staffName = sc.nextLine();
+                System.out.println("Enter your surname:");
+                stafflname = sc.nextLine();
+                System.out.println("Enter your phone number:");
+                staffNumber = sc.nextLine();
+                System.out.println("Create a password for this order:");
+                staffPass = sc.nextLine();
+
+                Staff stf = new Staff(staffName, stafflname, staffNumber, staffPass)
                 break;
             
             default:
