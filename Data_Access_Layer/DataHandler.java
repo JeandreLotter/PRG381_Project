@@ -20,6 +20,19 @@ public void UserDetails(String saveUser){
       }
 }
 
+public void StaffDetails(String saveUser){
+  try {
+      String Pathway = "Resources\\Staff.txt";
+      FileWriter myWriter = new FileWriter(Pathway);
+      myWriter.write(saveUser);
+      myWriter.close();
+      System.out.println("Staff successfully registered");
+    } catch (IOException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    }
+}
+
 public void EventDetail(String OrderNumber, String eType, String Date, String Time, String Address, int amount, int aMount, int camount, String Deserts, String Decorations, String decSize, Double Total){
     try {
         
@@ -35,9 +48,9 @@ public void EventDetail(String OrderNumber, String eType, String Date, String Ti
 }
 
 
-public void ReadFile(String Path){
+public void ReadFile(){
     try {
-        FileReader reader = new FileReader(Path);
+        FileReader reader = new FileReader("Resources\\Orders.txt");
         int character;
 
         while ((character = reader.read()) != -1) {
@@ -51,20 +64,18 @@ public void ReadFile(String Path){
 }
 
 //Validation user
-public Boolean Validation(String Uname,String Pass){
+public Boolean Validation(String orderNum,String Pass){
 
-  Scanner scanner = new Scanner("C:\\Users\\Riaan\\Desktop\\Subects\\PRG381\\ProjectPRG381\\Hano.txt");
+  Scanner scanner = new Scanner("Resources\\Users.txt");
   String[] tokens = {};
   while(scanner.hasNext()){
       tokens = scanner.nextLine().split(",");
       String last = tokens[tokens.length - 1];
       System.out.println(last);
   }
-  String UserName = tokens[1];
-  String lName = tokens[2];
+  String test = tokens[0];
   String PassWord = tokens[4];
-  String test = UserName+lName;
-  if(Uname == test && Pass == PassWord){
+  if(orderNum == test && Pass == PassWord){
       return true;
   }else{
       return false;
@@ -134,7 +145,7 @@ public ArrayList<String> readUpdates() throws IOException{
 }
 
 //delete user
-public static void Writetofile(ArrayList<String>list){
+public void Writetofile(ArrayList<String>list){
   try {
     BufferedWriter writer = new BufferedWriter(new FileWriter("Resources\\Users.txt"));
     for(String x:list){
@@ -147,7 +158,7 @@ public static void Writetofile(ArrayList<String>list){
   }
 }
 
-public static void DeleteUser(String orderNum) throws IOException{
+public void DeleteUser(String orderNum) throws IOException{
 ArrayList<String> list = new ArrayList<>();
 DataHandler dh = new DataHandler();
 list = dh.readUser();
@@ -162,7 +173,7 @@ System.out.println(list.toString());
 }
 
 //delete Order
-public static void Writetoofile(ArrayList<String>list){
+public void Writetoofile(ArrayList<String>list){
   try {
     BufferedWriter writer = new BufferedWriter(new FileWriter("Resources\\Orders.txt"));
     for(String x:list){
@@ -175,7 +186,7 @@ public static void Writetoofile(ArrayList<String>list){
   }
 }
 
-public static void DeleteOrder(String orderNum) throws IOException{
+public void DeleteOrder(String orderNum) throws IOException{
 ArrayList<String> list = new ArrayList<>();
 DataHandler dh = new DataHandler();
 list = dh.readUser();
@@ -220,6 +231,24 @@ public void UpdateOrders(String orderdetail) throws IOException{
   writer.close();
 }
 
+ public String nextOrderNum(){
+    Scanner sc = new Scanner("Resources\\Orders.txt");
+    String last ="";
+    while (sc.hasNextLine()) {
+      last = sc.nextLine();
+    }
+    int i = Integer.parseInt(last.split(",")[0]) + 1;
+    return Integer.toString(i);
+ }
+
+//  public ArrayList<String> readUser() throws IOException{
+//   Scanner scanner = new Scanner("Resources\\Users.txt");
+//   ArrayList<String> tokens = new ArrayList<String>();
+//   while(scanner.hasNext()){
+//       tokens.add(scanner.nextLine());
+//   }
+//   return tokens;
+// }
   
 }
 

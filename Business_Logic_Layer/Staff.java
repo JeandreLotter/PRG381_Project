@@ -38,7 +38,7 @@ public class Staff extends Person{
     public void saveUser() {
         String saveUser = fName+","+lName+","+number+","+password;
         DataHandler dh = new DataHandler();
-        dh.UserDetails(saveUser);
+        dh.StaffDetails(saveUser);
     }
     
 }

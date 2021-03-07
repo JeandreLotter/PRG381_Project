@@ -57,8 +57,4 @@ public class Customer extends Person{
         dh.UserDetails(saveUser);
     }
     
-    public Customer readUser(String orderNumber){
-        DataHandler dh = new DataHandler();
-        //LoginUser(String orderNumber)
-    }
 }

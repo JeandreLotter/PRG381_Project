@@ -1,4 +1,5 @@
 package Presentation_Layer;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -13,11 +14,12 @@ enum Menu{
 public class Main {
     
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        DataHandler dh = new DataHandler();
         String fName, lName, number, password, staffName, stafflname,
-                  staffNumber, staffPass,theme, venueAddress, venueNum, eventType, orderNum,
-                  aduldFood, kidsFood, drinks, desserts;
-        double  aduldFoodPrice, kidsFoodPrice, drinksPrice, dessertsPrice, themePrice = 500.99;
+                  snumber, staffPass,theme, venueAddress, venueNum, eventType, orderNum,
+                  aduldFood = "", kidsFood = "", drinks = "", desserts = "";
+        double  aduldFoodPrice = 0, kidsFoodPrice = 0, drinksPrice = 0, dessertsPrice = 0, themePrice = 500.99;
         boolean notification = false, accepted = false;
         int numAdult, numKids;
         //double price;
@@ -49,10 +51,6 @@ public class Main {
                 System.out.println("Create a password for this order:");
                 password = sc.nextLine();
                 
-            // private  String  theme, venueAddress, venueNum, eventType, orderNum;
-            //private  int numAdult, numKids;
-            //private  double price;
-            //private LocalDate eventDate;
 
             //Capture order details. Check if date is available. Generate orderNumber
             System.out.println("Enter the theme:");
@@ -63,7 +61,6 @@ public class Main {
             venueNum = sc.nextLine();
             System.out.println("Enter the type of event:");
             eventType = sc.nextLine();
-            //orderNum auto gen ;
             System.out.println("Enter number of adults joining:");
             numAdult = Integer.parseInt(sc.nextLine());
             System.out.println("Enter number of kids joining:");
@@ -193,6 +190,10 @@ public class Main {
              System.out.println("Enter the theme you want");
              theme = sc.nextLine(); 
 
+            //Autogen order number
+            
+            orderNum = dh.nextOrderNum();
+
             //Save user and order details
                 Customer cus = new Customer(orderNum, fName, lName, number, password, notification, accepted);
                 Orders or = new Orders(theme, venueAddress, venueNum, eventType, orderNum, numAdult, numKids, eventDate, aduldFood, kidsFood, drinks, desserts);
@@ -209,37 +210,76 @@ public class Main {
             case opt3:
             // displayModifyCancel switch
 
-            disp.displayModifyCancel();
+             while (true) {
+                System.out.println("Enter your order number:");
+                String iOrderNumber = sc.nextLine();
+                System.out.println("Enter password:");
+                String iUserPass = sc.nextLine();
+                if (dh.Validation(iOrderNumber, iUserPass) ) {
+                    disp.displayModifyCancel();
             slct = sc.next();
             choice = Menu.valueOf(slct);
-            DataHandler dh = new DataHandler();
+            
             switch (choice) {
                 case opt1:
                    //Modify 
-                  dh.UpdateOrders(orderdetail);
+                  dh.UpdateOrders(iOrderNumber);
                 break;
                 case opt2:
                  // Cancel order
                  
-                 dh.DeleteOrder(orderNum);
-                 dh.DeleteUser(orderNum);
+                 dh.DeleteOrder(iOrderNumber);
+                 dh.DeleteUser(iOrderNumber);
                 break;
                 default:
                     break;
             }
                 break;
+                }
+             }
+
+            
             
             case opt4:
-                System.out.println("Enter your name:");
-                staffName = sc.nextLine();
-                System.out.println("Enter your surname:");
-                stafflname = sc.nextLine();
-                System.out.println("Enter your phone number:");
-                staffNumber = sc.nextLine();
-                System.out.println("Create a password for this order:");
-                staffPass = sc.nextLine();
+                while (true) {
+                    System.out.println("Enter your name:");
+                    staffName = sc.nextLine();
+                    System.out.println("Enter your surname:");
+                    stafflname = sc.nextLine();
+                    System.out.println("Enter password:");
+                    staffPass = sc.nextLine();
+                    if (dh.ValidationStaff(staffName+stafflname, staffPass)) {
+                        System.out.println("Access granted. Welcome "+ staffName);
+                        System.out.println("Would you like to:");
+                        System.out.println("1) Add staff member");
+                        System.out.println("2) View order changes");
+                        String response = sc.nextLine();
+                        if (response == "1") {
+                             System.out.println("Enter staff name:");
+                             String sfName = sc.nextLine();
+                             System.out.println("Enter staff surname:");
+                             String slName = sc.nextLine();
+                             System.out.println("Enter staff phone number:");
+                             snumber = sc.nextLine();
+                             System.out.println("Create a password for this staff member:");
+                             String spassword = sc.nextLine();
+                             Staff stf = new Staff(sfName, slName, snumber, spassword);
+                             stf.saveUser();
+                             break;
+                        }else if (response=="2") {
+                            dh.ReadFile();
+                            break;
+                        } else {
+                            System.out.println("Invalid input");
+                        }
+                    }
+                    else{
+                        System.out.println("Access denied! Try again");
+                    }
+                }
+                
 
-                Staff stf = new Staff(staffName, stafflname, staffNumber, staffPass)
+                
                 break;
             
             default:
