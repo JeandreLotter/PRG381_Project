@@ -1,0 +1,5 @@
+1,Jaco,vdMerwe,0821231234,qwerty123,true,true
+2,Jeandre,Lotter,0822893847,123qwerty,false,true
+3,Johan,Loots,0988720947,123qwerty,false,true
+4,Hano,Taljaard,0823849038,qwe123rty,false,false
+orderNumber, Fname, lname, number

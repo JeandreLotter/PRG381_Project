@@ -85,8 +85,6 @@ double discount = costAdultFood * 0.15;
 price  = price - discount;
 }
 
-
-
 }
 
 
