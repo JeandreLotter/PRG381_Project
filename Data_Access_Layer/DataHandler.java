@@ -240,15 +240,6 @@ public void UpdateOrders(String orderdetail) throws IOException{
     int i = Integer.parseInt(last.split(",")[0]) + 1;
     return Integer.toString(i);
  }
-
-//  public ArrayList<String> readUser() throws IOException{
-//   Scanner scanner = new Scanner("Resources\\Users.txt");
-//   ArrayList<String> tokens = new ArrayList<String>();
-//   while(scanner.hasNext()){
-//       tokens.add(scanner.nextLine());
-//   }
-//   return tokens;
-// }
   
 }
 
